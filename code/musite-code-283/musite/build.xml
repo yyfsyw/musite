@@ -1,0 +1,75 @@
+
+
+<project name="Musite" default="jar" basedir=".">
+  <description>Builds, tests, and runs the project MUSite.</description>
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target name="init">
+    <tstamp/>
+    <property name="src" location="src"/>
+    <property name="lib" location="lib"/>
+    <property name="build" location="build"/>
+    <property name="build.classes" location="${build}/classes"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Compiles the project                                                -->
+  <!-- =================================================================== -->
+  <target name="compile" depends="init">
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build.classes}"/>
+    <javac target="1.5" srcdir="${src}" destdir="${build.classes}">
+      <classpath>
+        <pathelement location="lib/JSAP-2.1.jar"/>
+        <pathelement location="lib/cytoscape-task.jar"/>
+        <pathelement location="lib/dom4j-1.6.1.jar"/>
+        <pathelement location="lib/commons-lang-2.4.jar"/>
+        <pathelement location="lib/looks-2.2.2.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Clean up, get back to original state                                -->
+  <!-- =================================================================== -->
+  <target name="clean" depends="init">
+    <echo message="delete ${build}"/>
+    <delete dir="${build}"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the project jar file                                        -->
+  <!-- =================================================================== -->
+  <target name="jar" depends="compile">
+    <jar destfile="Musite.jar">
+      <manifest>
+        <attribute name="Main-Class" value="musite.MusiteMain" />
+        <attribute name="Class-Path" value="lib/cytoscape-task.jar lib/dom4j-1.6.1.jar lib/commons-lang-2.4.jar lib/looks-2.2.2.jar lib/JSAP-2.1.jar"/>
+      </manifest>
+
+      <fileset dir= "${build.classes}" />
+    </jar>
+  </target>
+
+
+
+  <!-- =================================================================== -->
+  <!-- Creates the project jar file                                        -->
+  <!-- =================================================================== -->
+  <target name="jar-src">
+    <jar destfile="Musite-src.jar">
+      <fileset dir= "src" />
+    </jar>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Clean and jar                                       -->
+  <!-- =================================================================== -->
+  <target name="clean and jar" depends="clean, jar"/>
+  
+</project>
+
+
+

@@ -1,0 +1,12 @@
+ATTENTION: PLEASE READ THE FOLLOWING TERMS AND CONDITIONS CAREFULLY BEFORE USING
+THE VSL2 PREDICTOR SOFTWARE. BY USING THIS SOFTWARE, YOU AGREE TO BE BOUND BY THE
+FOLLOWING TERMS AND CONDITIONS. IF YOU DO NOT ACCEPT THESE TERMS ("TERMS"), DO
+NOT USE THIS SOFTWARE.
+
+1) The software should be used for non-commercial purpose only;
+2) The software may not be redistributed in any forms, either as a standalone
+   package or incorporated into another software or website, without the
+   author's permission;
+3) The software is provided "as is". There is no warranty of any kind. The
+   author is not liable for any damages, harms or other consequences, which may
+   result from the use or inability to use of the software.

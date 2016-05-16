@@ -1,0 +1,1 @@
+java -Xss5M -Xmx1024M -jar Musite.jar
