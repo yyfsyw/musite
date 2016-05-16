@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rdf:RDF xmlns="http://purl.uniprot.org/core/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/498845">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Genus" />
+<scientificName>Candidatus Korarchaeum</scientificName>
+<otherName>'Candidatus Korarchaeum'</otherName>
+<otherName>Korarchaeum</otherName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51967" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/498846">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Species" />
+<scientificName>Candidatus Korarchaeum cryptofilum</scientificName>
+<otherName>'Candidatus Korarchaeum cryptofilum'</otherName>
+<otherName>Korarchaeum cryptofilum</otherName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/498845" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/51968">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Genus" />
+<scientificName>environmental samples</scientificName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51967" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/132564">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Species" />
+<scientificName>korarchaeote SRI-306</scientificName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51967" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/374847">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<reviewed rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</reviewed>
+<complete rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</complete>
+<mnemonic>KORCO</mnemonic>
+<scientificName>Korarchaeum cryptofilum (strain OPF8)</scientificName>
+<otherName>Candidatus Korarchaeum cryptofilum OPF8</otherName>
+<otherName>Candidatus Korarchaeum cryptofilum str. OPF8</otherName>
+<otherName>Candidatus Korarchaeum cryptofilum strain OPF8</otherName>
+<otherName>Korarchaeum cryptofilum OPF8</otherName>
+<otherName>korarchaeote OPF1-KOR</otherName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/498846" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/161241">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Species" />
+<scientificName>uncultured korarchaeote</scientificName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51968" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/120222">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Species" />
+<scientificName>uncultured korarchaeote pBA5</scientificName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51968" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/51969">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Species" />
+<scientificName>uncultured korarchaeote pJP27</scientificName>
+<otherName>unidentified korarchaeote pJP27</otherName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51968" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.uniprot.org/taxonomy/51970">
+<rdf:type rdf:resource="http://purl.uniprot.org/core/Taxon" />
+<rank rdf:resource="http://purl.uniprot.org/core/Species" />
+<scientificName>uncultured korarchaeote pJP78</scientificName>
+<otherName>unidentified korarchaeote pJP78</otherName>
+<rdfs:subClassOf rdf:resource="http://purl.uniprot.org/taxonomy/51968" />
+<partOfLineage rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</partOfLineage>
+</rdf:Description>
+</rdf:RDF>
