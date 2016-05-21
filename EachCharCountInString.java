@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eachcharcountinstring;
+//package eachcharcountinstring;
 
 import java.io.File;
 import java.util.*;
@@ -19,6 +19,9 @@ public class EachCharCountInString {
     {
         //Creating a HashMap containing char as a key and occurrences as  a value
  
+ 		final String matchString = "ABCDEFGHIZKLMNOPQRSTUVW";
+
+
         HashMap<Character, Integer> charCountMap = new HashMap<Character, Integer>();
  
         //Converting given string to char array
@@ -28,6 +31,8 @@ public class EachCharCountInString {
         //count the number of chars in the inputString
         
         int count = 0;
+        Random rand = new Random();
+		int  n;
         
         //store the frequency result
         
@@ -37,20 +42,36 @@ public class EachCharCountInString {
  
         for (char c : strArray)
         {
-            if(charCountMap.containsKey(c))
-            {
-                //If char is present in charCountMap, incrementing it's count by 1
- 
-                charCountMap.put(c, charCountMap.get(c)+1);
-            }
-            else
-            {
-                //If char is not present in charCountMap,
-                //putting this char to charCountMap with 1 as it's value
- 
-                charCountMap.put(c, 1);
-            }
-            count++;
+        	if (matchString.indexOf(c) != -1)
+        	{
+	            if(charCountMap.containsKey(c))
+	            {
+	                //If char is present in charCountMap, incrementing it's count by 1
+	 
+	                charCountMap.put(c, charCountMap.get(c)+1);
+	            }
+	            else
+	            {
+	                //If char is not present in charCountMap,
+	                //putting this char to charCountMap with 1 as it's value
+	 
+	                charCountMap.put(c, 1);
+	            }
+	            count++;
+	        }
+	        else if(Character.isLetter(c))
+	        {
+	        	//System.out.println(c);
+	        	n = rand.nextInt(20);
+
+				c = matchString.charAt(n);
+				//System.out.println(c);
+	        }
+	        else
+	        {
+	        	System.out.println("Error");
+	        	continue;
+	        }
         }
         
         //calculate the frequency
