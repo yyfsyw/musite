@@ -11,6 +11,7 @@ public class PWAA
 
     static void numSeq(String inputString)
     {
+        //find input sequence fragment's length
         int len = inputString.length();
 
         //System.out.println("length is " + len);
@@ -19,6 +20,7 @@ public class PWAA
 
         //System.out.println("l is " + l);
 
+        //find the range
         int[] loca = IntStream.rangeClosed(-l, l).toArray();
 
 
@@ -26,15 +28,30 @@ public class PWAA
 
         //System.out.println(loca[0]);
 
-        //double[] numSeq = new double[20];
+        //find number sequence
         ArrayList<Double> numSeq = new ArrayList<Double>();
         int temsum;
         int temsign;
 
+        /*
+        for i=1:20
+        Numseq(i)=1/(L*(L+1));
+        temsum=0;
+        for j=1:(2*L+1)
+        temsign=(OSet(i)==P_SeqFrag(j));
+        temsum=temsum+temsign*(Loca(j)+abs(Loca(j))/L);
+        end
+        Numseq(i)=Numseq(i)*temsum;
+        end
+        return
+        */
+        
         for(int i = 0; i < 20; i++)
         {
             numSeq.add (1.0 / (l * (l + 1.0)));
+
             temsum = 0;
+
             for(int j = 0; j < (2 * l + 1); j++)
             {
                 if(oSet.charAt(i) == inputString.charAt(j))
@@ -53,6 +70,7 @@ public class PWAA
         }
 
 
+        //print out the result
         for(int k = 0; k < numSeq.size(); k++)
         {
             System.out.println(numSeq.get(k));
@@ -62,6 +80,7 @@ public class PWAA
  
     public static void main(String[] args) throws FileNotFoundException
     {
+        //read file
         File file = new File("artifica_data.txt");
         //print the title
         try (Scanner input = new Scanner(file)) 

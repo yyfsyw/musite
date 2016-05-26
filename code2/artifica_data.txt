@@ -1,6 +1,2 @@
 >sample1
-AAAAA
->sample2
-MKYVFYLGVLAGTFFFADS
->sample3
-SRVRDGTEQ
+ABCDE
