@@ -106,6 +106,7 @@ public class EachCharCountInString {
     public static void main(String[] args) throws FileNotFoundException
     {
         int sampleNo=1;
+        String sampleStr="";
         File file = new File("artifica_data.txt");
         //print the title
         try (Scanner input = new Scanner(file)) {
@@ -126,11 +127,16 @@ public class EachCharCountInString {
                 
                 if(nextToken.contains(">sample"))
                 {
-                    
+                    //print the result for last sample
+                    if(sampleNo!=1){
+                        characterCount(sampleStr);
+                    }
+                    //print the title for the current sample
+                    System.out.print(sampleNo+"\t");
+                    sampleStr = "";
                     continue;
                 }
-                System.out.print(sampleNo+"\t");
-                characterCount(nextToken);
+                sampleStr = sampleStr + nextToken;
                 sampleNo++;
             }
         }
