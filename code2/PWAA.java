@@ -26,13 +26,14 @@ public class PWAA
 
         //System.out.println(loca[0]);
 
-        double[] numSeq = new double[20];
+        //double[] numSeq = new double[20];
+        ArrayList<Double> numSeq = new ArrayList<Double>();
         int temsum;
         int temsign;
 
         for(int i = 0; i < 20; i++)
         {
-            numSeq[i] = 1 / (l * (l + 1));
+            numSeq.add (1.0 / (l * (l + 1.0)));
             temsum = 0;
             for(int j = 0; j < (2 * l + 1); j++)
             {
@@ -48,13 +49,13 @@ public class PWAA
                 temsum = temsum + temsign * (loca[j] + Math.abs(loca[j]) / l);
             }
 
-            numSeq[i] = numSeq[i] * temsum;
+            numSeq.set(i, numSeq.get(i) * temsum);
         }
 
 
-        for(int k = 0; k < numSeq.length; k++)
+        for(int k = 0; k < numSeq.size(); k++)
         {
-            System.out.println(numSeq[k]);
+            System.out.println(numSeq.get(k));
         }
 
     }

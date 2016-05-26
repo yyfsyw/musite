@@ -1,5 +1,5 @@
 >sample1
-MWGPGSD
+AAAAA
 >sample2
 MKYVFYLGVLAGTFFFADS
 >sample3
