@@ -27,7 +27,7 @@ public class output
             if(inputString.charAt(i) == 'k' || inputString.charAt(i) == 'K')
             {
                 //check if it out of range
-                if(i - r > 0 && i + r <= len)
+                if(i - r >= 0 && i + r <= len)
                 {
                     //add to the array list
                     //System.out.println("K is at " + i + " position");
@@ -35,6 +35,54 @@ public class output
                     //System.out.println(inputString.substring(i - r, i + r + 1));
                     kString.add(inputString.substring(i - r, i + r + 1));
                 }
+                else if( i - r < 0 && i + r <= len)
+                {
+                    String tempStr = inputString.substring(0, i + r + 1);
+
+                    for(int j = i - r; j < 0; j++)
+                    {
+                        tempStr = "X" + tempStr;
+                    }
+
+                    //System.out.println(tempStr);
+
+                    kPos.add(i);
+                    kString.add(tempStr);
+                }
+                else if( i + r > len && i - r >= 0)
+                {
+                    String tempStr = inputString.substring(i - r, len);
+
+                    for(int j = len; j <= i + r; j++)
+                    {
+                        tempStr = tempStr + "X";
+                    }
+
+                    //System.out.println(tempStr);
+
+                    kPos.add(i);
+                    kString.add(tempStr);
+                }
+                else
+                {
+                    String tempStr = inputString.substring(0, len);
+
+                    for(int j = i - r; j < 0; j++)
+                    {
+                        tempStr = "X" + tempStr;
+                    }
+
+                    for(int j = len; j <= i + r; j++)
+                    {
+                        tempStr = tempStr + "X";
+                    }
+
+                    //System.out.println(tempStr);
+
+                    kPos.add(i);
+                    kString.add(tempStr);
+                }
+
             }
 
         }
