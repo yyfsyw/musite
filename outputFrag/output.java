@@ -17,25 +17,34 @@ public class output
         System.out.println("length is " + len);
         //System.out.println("r is " + r);
 
+        //store the K position
         ArrayList<Integer> kPos = new ArrayList<Integer>();
+        //store a range of string for K
         ArrayList<String> kString = new ArrayList<String>();
 
         for(int i = 0; i < len; i++)
         {
             if(inputString.charAt(i) == 'k' || inputString.charAt(i) == 'K')
             {
+                //check if it out of range
                 if(i - r > 0 && i + r <= len)
                 {
-                    System.out.println("K is at " + i + " position");
+                    //add to the array list
+                    //System.out.println("K is at " + i + " position");
                     kPos.add(i);
-                    System.out.println(inputString.substring(i - r, i + r + 1));
+                    //System.out.println(inputString.substring(i - r, i + r + 1));
                     kString.add(inputString.substring(i - r, i + r + 1));
                 }
             }
 
-
         }
 
+
+        //output
+        for(int k = 0; k < kPos.size(); k++)
+        {
+            System.out.println("The K is at " + kPos.get(k) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(k));
+        }
 
 
     }
