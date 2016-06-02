@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class output 
 {
 
-    static void outFrag(String inputString, int r)
+    static void outFrag(String inputString, int r, char k, ArrayList<String> positive, ArrayList<String> negative, Integer[] siteSet)
     {
         //find input sequence fragment's length
         int len = inputString.length();
@@ -20,11 +20,15 @@ public class output
         //store the K position
         ArrayList<Integer> kPos = new ArrayList<Integer>();
         //store a range of string for K
-        ArrayList<String> kString = new ArrayList<String>();
-
+        ArrayList<String> kString = new ArrayList<String>();  
+        
+        //the char added when it's out of range
+        char frontChar =  inputString.charAt(0);
+        char endChar =  inputString.charAt(len-1);
+        
         for(int i = 0; i < len; i++)
         {
-            if(inputString.charAt(i) == 'k' || inputString.charAt(i) == 'K')
+            if(inputString.charAt(i) == k)
             {
                 //check if it out of range
                 if(i - r >= 0 && i + r <= len)
@@ -38,10 +42,11 @@ public class output
                 else if( i - r < 0 && i + r <= len)
                 {
                     String tempStr = inputString.substring(0, i + r + 1);
+                    
 
                     for(int j = i - r; j < 0; j++)
                     {
-                        tempStr = "X" + tempStr;
+                        tempStr = frontChar + tempStr;
                     }
 
                     //System.out.println(tempStr);
@@ -52,10 +57,10 @@ public class output
                 else if( i + r > len && i - r >= 0)
                 {
                     String tempStr = inputString.substring(i - r, len);
-
+                    
                     for(int j = len; j <= i + r; j++)
                     {
-                        tempStr = tempStr + "X";
+                        tempStr = tempStr + endChar;
                     }
 
                     //System.out.println(tempStr);
@@ -66,15 +71,15 @@ public class output
                 else
                 {
                     String tempStr = inputString.substring(0, len);
-
+                    
                     for(int j = i - r; j < 0; j++)
                     {
-                        tempStr = "X" + tempStr;
+                        tempStr = frontChar + tempStr;
                     }
 
                     for(int j = len; j <= i + r; j++)
                     {
-                        tempStr = tempStr + "X";
+                        tempStr = tempStr + endChar;
                     }
 
                     //System.out.println(tempStr);
@@ -87,13 +92,22 @@ public class output
 
         }
 
+        List<Integer> list = Arrays.asList(siteSet);
 
         //output
-        for(int k = 0; k < kPos.size(); k++)
+        for(int i = 0; i < kPos.size(); i++)
         {
-            System.out.println("The K is at " + kPos.get(k) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(k));
+            //System.out.println("The "+k+" is at " + kPos.get(i) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(i));
+            
+            if(list.contains(kPos.get(i)))
+            {
+                positive.add(kString.get(i));
+            }
+            else
+            {
+                negative.add(kString.get(i));
+            }
         }
-
 
     }
  
@@ -101,6 +115,13 @@ public class output
     {
         //read file
         File file = new File("artifica_data.txt");
+
+        Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
+
+        ArrayList<String> positive = new ArrayList<String>();
+
+        ArrayList<String> negative = new ArrayList<String>();
+
         //print the title
         try (Scanner input = new Scanner(file)) 
         {
@@ -121,7 +142,23 @@ public class output
                 int r = reader.nextInt();
                 System.out.println("range is " + r);
 
-                outFrag(nextToken, r);
+                outFrag(nextToken, r, 'K', positive, negative, siteSet);
+
+                //print the positive fragment.
+                System.out.println("positive fragment are");
+                for (int i = 0; i < positive.size(); i++) 
+                {
+                    System.out.println(positive.get(i));
+                }
+
+                System.out.println();
+
+                //print the negative fragment.
+                System.out.println("negative fragment are");
+                for (int j = 0; j < negative.size(); j++) 
+                {
+                    System.out.println(negative.get(j));
+                }
             }
         }
     }
