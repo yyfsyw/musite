@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 public class CreateFrag 
 {
 
-    static void outFrag(String inputString, int r, char k)
+    static void outFrag(String inputString, int r, char k, ArrayList<String> positive, ArrayList<String> negative, Integer[] siteSet)
     {
         //find input sequence fragment's length
         int len = inputString.length();
@@ -103,10 +103,21 @@ public class CreateFrag
         }
 
 
+        List<Integer> list = Arrays.asList(siteSet);
+
         //output
         for(int i = 0; i < kPos.size(); i++)
         {
-            System.out.println("The "+k+" is at " + kPos.get(i) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(i));
+            //System.out.println("The "+k+" is at " + kPos.get(i) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(i));
+            
+            if(list.contains(kPos.get(i)))
+            {
+                positive.add(kString.get(i));
+            }
+            else
+            {
+                negative.add(kString.get(i));
+            }
         }
 
 

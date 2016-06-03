@@ -67,6 +67,34 @@ public class MusitePractice {
         
         return String.valueOf(strArray);
     }
+    
+    static void concatenateFragsFeaturesOfSamples(ArrayList<String> positive, ArrayList<String> negative, HashMap positiveFeatures, HashMap negativeFeatures)
+    {
+        //contenate the features of each positive fragment
+                            
+        for(int i=0; i<positive.size();i++)
+        {
+            //call frequency feature
+          Frequency.characterCount(positive.get(i));
+          //call binary coding feature(EBAG)
+          EBAG.numSeq(positive.get(i));
+          //call PWAA feature
+          PWAA.numSeq(positive.get(i));
+        }
+
+        //contenate the features of each positive fragment
+
+        for(int j=0; j<negative.size();j++)
+        {
+            //call frequency feature
+            Frequency.characterCount(negative.get(j));
+            //call binary coding feature(EBAG)
+            EBAG.numSeq(negative.get(j));
+            //call PWAA feature
+            PWAA.numSeq(negative.get(j));
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -81,6 +109,18 @@ public class MusitePractice {
         //FILE operation
         File file = new File("artifica_data.txt");
         
+        //used to store classified fragment for current sample
+        Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
+
+        ArrayList<String> positive = new ArrayList<String>();
+
+        ArrayList<String> negative = new ArrayList<String>();
+        
+        //used to store all fragments of all samples and the features of all the fragments
+        
+        HashMap<String, double[]> positiveFeatures = new HashMap<String, double[]>();
+        HashMap<String, double[]> negativeFeatures = new HashMap<String, double[]>();
+  
         try (Scanner input = new Scanner(file)) {
             
             while(input.hasNext())
@@ -94,18 +134,17 @@ public class MusitePractice {
                 {
                     //print the result for last sample
                     if(sampleNo!=1){
-                        //call check function
+                        //call check function for current sample
                         validStr = checkSample(sampleStr,sampleNo-1);
                         if(validStr!=null)//if the input is valid
                         {
-                            //call the feature functions
+                            //get the positive and negative fragments list of the current sample
                             System.out.println(validStr);
-                            //call frequency feature
-                            Frequency.characterCount(validStr, sampleNo-1);
-                            //call binary coding feature(EBAG)
-                            EBAG.numSeq(validStr);
-                            //call PWAA feature
-                            PWAA.numSeq(validStr);
+                            CreateFrag.outFrag(validStr, 5, 'A',positive,negative,siteSet);
+                            System.out.println("positive: "+positive);
+                            System.out.println("negative: "+negative);
+                            
+                            concatenateFragsFeaturesOfSamples(positive, negative, positiveFeatures, negativeFeatures);
                         }
                     }
                     sampleStr = "";
@@ -118,13 +157,18 @@ public class MusitePractice {
             //calculate the last sample
             //call check function
             validStr = checkSample(sampleStr,sampleNo-1);
-            //call frequency feature
             System.out.println(validStr);
-            Frequency.characterCount(validStr, sampleNo-1);
-            //call binary coding feature(EBAG)
-            EBAG.numSeq(validStr);
-            //call PWAA feature
-            PWAA.numSeq(validStr);
+
+            if(validStr!=null)//if the input is valid
+            {
+                //get the positive and negative fragments list of the current sample
+                System.out.println(validStr);
+                CreateFrag.outFrag(validStr, 5, 'A',positive,negative,siteSet);
+                System.out.println("positive: "+positive);
+                System.out.println("negative: "+negative);
+
+                concatenateFragsFeaturesOfSamples(positive, negative, positiveFeatures, negativeFeatures);
+            }
         }
 
     }
