@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
  */
 public class PWAA {
     
-     static void numSeq(String inputString)
+     static ArrayList<Double> numSeq(String inputString)
     {
         //find input sequence fragment's length
         int len = inputString.length();
@@ -31,7 +31,7 @@ public class PWAA {
         int[] loca = IntStream.rangeClosed(-l, l).toArray();
 
 
- 		final String oSet = "ACDEFGHIKLMNPQRSTVWY";
+ 	final String oSet = "ACDEFGHIKLMNPQRSTVWY";
 
         //System.out.println(loca[0]);
 
@@ -76,12 +76,12 @@ public class PWAA {
             numSeq.set(i, numSeq.get(i) * temsum);
         }
 
-
+        return (numSeq);
         //print out the result
-        for(int k = 0; k < numSeq.size(); k++)
-        {
-            System.out.println(numSeq.get(k));
-        }
+//        for(int k = 0; k < numSeq.size(); k++)
+//        {
+//            System.out.println(numSeq.get(k));
+//        }
 
     }
 

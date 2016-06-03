@@ -70,29 +70,67 @@ public class MusitePractice {
     
     static void concatenateFragsFeaturesOfSamples(ArrayList<String> positive, ArrayList<String> negative, HashMap positiveFeatures, HashMap negativeFeatures)
     {
+
+        ArrayList<Double> tempPWAAList = new ArrayList<Double>();
+        ArrayList<Double> tempFreList = new ArrayList<Double>();
+        ArrayList<Double> tempEBAGList = new ArrayList<Double>();
+        ArrayList<Double> combined = new ArrayList<Double>();
+        
         //contenate the features of each positive fragment
                             
         for(int i=0; i<positive.size();i++)
         {
             //call frequency feature
-          Frequency.characterCount(positive.get(i));
+          tempFreList=Frequency.characterCount(positive.get(i));
+          //System.out.println("positive tempFreList: "+tempFreList);
           //call binary coding feature(EBAG)
-          EBAG.numSeq(positive.get(i));
+          tempEBAGList=EBAG.numSeq(positive.get(i));
+          //System.out.println("positive tempEBAGList: "+tempEBAGList);
           //call PWAA feature
-          PWAA.numSeq(positive.get(i));
+          tempPWAAList = PWAA.numSeq(positive.get(i));
+          //System.out.println("positive tempPWAAList: "+tempPWAAList);
+          
+          //combine all the features
+          combined.addAll(tempFreList);
+          combined.addAll(tempEBAGList);
+          combined.addAll(tempPWAAList);
+          
+          //put feature list into map
+          positiveFeatures.put(positive.get(i),combined);
+          
+          //clear
+          combined = new ArrayList<Double>();
+          
         }
-
+        System.out.println("positive map: "+positiveFeatures);
+        
+        
         //contenate the features of each positive fragment
 
         for(int j=0; j<negative.size();j++)
         {
             //call frequency feature
-            Frequency.characterCount(negative.get(j));
+            tempFreList = Frequency.characterCount(negative.get(j));
+            //System.out.println("negative tempFreList: "+tempFreList);
             //call binary coding feature(EBAG)
-            EBAG.numSeq(negative.get(j));
+            tempEBAGList=EBAG.numSeq(negative.get(j));
+            //System.out.println("negative tempEBAGList: "+tempEBAGList);
             //call PWAA feature
-            PWAA.numSeq(negative.get(j));
+            tempPWAAList = PWAA.numSeq(negative.get(j));
+            //System.out.println("negative tempPWAAList: "+tempPWAAList);
+            
+            //combine all the features
+            combined.addAll(tempFreList);
+            combined.addAll(tempEBAGList);
+            combined.addAll(tempPWAAList);
+            
+            //put feature list into map
+            negativeFeatures.put(negative.get(j),combined);
+
+            //clear
+            combined = new ArrayList<Double>();
         }
+        System.out.println("negative map: "+negativeFeatures);
     }
     
     /**
@@ -118,8 +156,8 @@ public class MusitePractice {
         
         //used to store all fragments of all samples and the features of all the fragments
         
-        HashMap<String, double[]> positiveFeatures = new HashMap<String, double[]>();
-        HashMap<String, double[]> negativeFeatures = new HashMap<String, double[]>();
+        HashMap<String, ArrayList<Double>> positiveFeatures = new HashMap<String, ArrayList<Double>>();
+        HashMap<String, ArrayList<Double>> negativeFeatures = new HashMap<String, ArrayList<Double>>();
   
         try (Scanner input = new Scanner(file)) {
             

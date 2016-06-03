@@ -6,6 +6,7 @@
 package musitepractice;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class Frequency {
             System.out.println();
     }
     
-    static void characterCount(String inputString)
+    static ArrayList<Double> characterCount(String inputString)
     {
         //Creating a HashMap containing char as a key and occurrences as  a value
         
@@ -40,9 +41,16 @@ public class Frequency {
         
         int count = 0;
         
-        //store the frequency result
+        //store the frequency result for 26 letters
         
         double[] frequency = new double[26];
+        
+        //store valid index
+        
+        int[] validIndex = {0,2,3,4,5,6,7,8,10,11,12,13,15,16,17,18,19,21,22,24};
+        
+        //store the frequency result for 20 valid letters
+        ArrayList<Double> validFrequency = new ArrayList<Double>();
         
         //checking each char of strArray
  
@@ -79,17 +87,27 @@ public class Frequency {
             tempFrequency =(valueInt*1.0)/count;
             //round up and keep 5 digits after decimal point
             BigDecimal bg = new BigDecimal(tempFrequency); 
-            frequency[index]= bg.setScale(5, BigDecimal.ROUND_HALF_UP).doubleValue();
+            frequency[index]= bg.setScale(5, BigDecimal.ROUND_HALF_UP).doubleValue();  
+            
         }
+        
+        for(int i =0; i<20; i++)
+            {
+                int indexTemp = validIndex[i];
+                double temp = frequency[indexTemp];
+                validFrequency.add(temp);
+            }
+        return validFrequency;
 
 //        //print the title
 //        System.out.print(sampleNo+"\t");
         //Printing the frequency
-        for(int i=0; i<26; i++)
-        {
-            System.out.print(frequency[i]+ "\t");
-        }
-        System.out.println();
+//        for(int i=0; i<26; i++)
+//        {
+//            System.out.print(frequency[i]+ "\t");
+//        }
+//        System.out.println();
+        
         
     }
 }
