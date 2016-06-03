@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class EBAG 
 {
     
-    static ArrayList<Double> numSeq(String inputString)
+    static Double numSeq(String inputString)
     {
         
         //classify 20 letters into 4 groups
@@ -18,29 +18,30 @@ public class EBAG
         
         //variable to save binary code
         
-        ArrayList<Double> numSeqStr = new ArrayList<Double>();
+        String numSeqStr = "";
         
         //Converting given string to char array
  
         char[] strArray = inputString.toCharArray();
         
         //convert the letter string into binary string
-        for(int i=0; i<4; i++){
+        for(int i = 0; i < 4; i++){
             for(char c : strArray){
                 if(groups[i].indexOf(c) == -1)
                 {
-                    numSeqStr.add(0.0);// = numSeqStr + "0";
+                    numSeqStr = numSeqStr + "0";
                 }
                 else
                 {
-                    numSeqStr.add(1.0);// = numSeqStr + "1";
+                    numSeqStr = numSeqStr + "1";
                 }
             }
         }
-        
-        //System.out.println(numSeqStr);
 
-        return (numSeqStr);
+        
+        System.out.println(numSeqStr);
+        Integer returnVal = Integer.parseInt(numSeqStr, 2);
+        return returnVal * 1.0;
     }
 
     public static void main(String[] args) throws FileNotFoundException
@@ -61,13 +62,10 @@ public class EBAG
                 {   
                     continue;
                 }
-                List<Double> myList = numSeq(nextToken);
+                Double myNum = numSeq(nextToken);
 
                         //print out the result
-                for(int k = 0; k < myList.size(); k++)
-                {
-                    System.out.println(myList.get(k));
-                }
+                System.out.println(myNum);
             }
         }
     }
