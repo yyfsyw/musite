@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class PWAA 
 {
 
-    static void numSeq(String inputString)
+    static ArrayList<Double> numSeq(String inputString)
     {
         //find input sequence fragment's length
         int len = inputString.length();
@@ -69,12 +69,7 @@ public class PWAA
             numSeq.set(i, numSeq.get(i) * temsum);
         }
 
-
-        //print out the result
-        for(int k = 0; k < numSeq.size(); k++)
-        {
-            System.out.println(numSeq.get(k));
-        }
+        return (numSeq);
 
     }
  
@@ -96,7 +91,13 @@ public class PWAA
                 {   
                     continue;
                 }
-                numSeq(nextToken);
+                List<Double> myList = numSeq(nextToken);
+
+                        //print out the result
+                for(int k = 0; k < myList.size(); k++)
+                {
+                    System.out.println(myList.get(k));
+                }
             }
         }
     }
