@@ -7,7 +7,6 @@ package musitepractice;
 import java.io.File;
 import java.util.*;
 import java.io.*;
-import java.math.BigDecimal;
 /**
  *
  * @author qiaoyang
@@ -148,6 +147,39 @@ public class MusitePractice {
         //FILE operation
         File file = new File("artifica_data.txt");
         
+        String sampleInput = "zEWGPGSDWSRGEAAGVDRGKAGLGLGGRPPPQPPREERAQQLLDAVEQRQRQLLDTIAACEEMLRQLGRRRPEPAGGGNVSAKPGAPPQPAVSARGGFPKDAGDGAAEP";
+        
+        sampleInput = checkSample(sampleInput,sampleNo-1);
+        
+        System.out.println(sampleInput);
+        
+        ArrayList<String> sample = new ArrayList<String>();
+        ArrayList<Double> tempPWAAList = new ArrayList<Double>();
+        ArrayList<Double> tempFreList = new ArrayList<Double>();
+        ArrayList<Double> tempEBAGList = new ArrayList<Double>();
+        ArrayList<Double> combined = new ArrayList<Double>();
+        
+        CreateFrag.outFrag(sampleInput, 5, 'A', null, null, sample, null);
+        
+        //for(int k = 0;  k < sample.size(); k++)
+        //{
+            //call frequency feature
+          tempFreList=Frequency.characterCount(sample.get(1));
+          //System.out.println("positive tempFreList: "+tempFreList);
+          //call binary coding feature(EBAG)
+          tempEBAGList=EBAG.numSeq(sample.get(1));
+          //System.out.println("positive tempEBAGList: "+tempEBAGList);
+          //call PWAA feature
+          tempPWAAList = PWAA.numSeq(sample.get(1));
+          //System.out.println("positive tempPWAAList: "+tempPWAAList);
+          
+        //}
+        
+        //combine all the features
+        combined.addAll(tempFreList);
+        combined.addAll(tempEBAGList);
+        combined.addAll(tempPWAAList);
+        
         //used to store classified fragment for current sample
         Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
 
@@ -162,8 +194,9 @@ public class MusitePractice {
         HashMap<String, ArrayList<Double>> tempForBalance = new HashMap<String, ArrayList<Double>>();
   
         
-        //p Double[] sampleFeature = {0.09091, 0.0, 0.09091, 0.0, 0.27273, 0.09091, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.09091, 0.0, 0.18182, 0.09091, 0.09091, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03333333333333333, 0.0, -0.2, -0.13333333333333333, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.16666666666666666, -0.13333333333333333, 0.13333333333333333, 0.0, 0.0};
-        Double[] sampleFeature = {0.18182, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.09091, 0.18182, 0.27273, 0.18182, 0.0, 0.09091, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.1, -0.03333333333333333, 0.03333333333333333, 0.0, 0.0, 0.06666666666666667, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        Double[] sampleFeature = new Double[combined.size()];
+        sampleFeature = combined.toArray(sampleFeature);
+
         ArrayList<Double> sampleFeatureList =  new ArrayList<Double>(Arrays.asList(sampleFeature));
         
         
@@ -186,7 +219,7 @@ public class MusitePractice {
                         {
                             //get the positive and negative fragments list of the current sample
                             //System.out.println(validStr);
-                            CreateFrag.outFrag(validStr, 5, 'A',positive,negative,siteSet);
+                            CreateFrag.outFrag(validStr, 5, 'A', positive, negative, null, siteSet);
                             //System.out.println("positive: "+positive);
                             //System.out.println("negative: "+negative);
                             
@@ -210,7 +243,7 @@ public class MusitePractice {
             {
                 //get the positive and negative fragments list of the current sample
                 //System.out.println(validStr);
-                CreateFrag.outFrag(validStr, 5, 'A',positive,negative,siteSet);
+                CreateFrag.outFrag(validStr, 5, 'A', positive, negative, null, siteSet);
                 //System.out.println("positive: "+positive);
                 //System.out.println("negative: "+negative);
 
