@@ -18,7 +18,7 @@ public class KNN {
     
     
     
-    static int KNNTest(HashMap positiveFeatures, HashMap negativeFeatures, ArrayList<Double> sampleFeature){
+    static double KNNTest(HashMap positiveFeatures, HashMap negativeFeatures, ArrayList<Double> sampleFeature){
         
         ArrayList<Double> positiveDis = new ArrayList<>();
         ArrayList<Double> negativeDis = new ArrayList<>();
@@ -97,7 +97,7 @@ public class KNN {
         }
     }
     
-    static int getClassify(ArrayList<Integer> nearestKDis){
+    static double getClassify(ArrayList<Integer> nearestKDis){
         
         int posTimes=0;
         int negTimes=0;
@@ -111,8 +111,8 @@ public class KNN {
             }
         }
         
-        if(posTimes>negTimes) return 1;
-        else return 0;
+        
+        return posTimes*(1.0)/(posTimes+negTimes);
     }
     
 }

@@ -140,7 +140,7 @@ public class MusitePractice {
         int sampleNo=1;
         String sampleStr="";
         String validStr="";
-        int classResult=0;
+        double classResult=0.0;
         //print the title
         //Frequency.printTitleLetter();
         
@@ -162,7 +162,7 @@ public class MusitePractice {
         HashMap<Integer, ArrayList<Double>> sampleFeature = new HashMap<>();
         //ArrayList<Double> sampleFeature = new ArrayList<Double>();
         
-        CreateFrag.outFrag(sampleInput, 5, 'A', null, null, sample, null);
+        ArrayList<Integer> kPosition = CreateFrag.outFrag(sampleInput, 5, 'A', null, null, sample, null);
         
         for(int k = 0;  k < sample.size(); k++)
         {
@@ -278,6 +278,7 @@ public class MusitePractice {
             for(int l = 0; l < sampleFeature.size(); l++)
             {
                 //System.out.println(sampleFeature.get(l));
+                System.out.println("position : "+kPosition.get(l));
                 classResult = KNN.KNNTest(positiveFeatures, tempForBalance, sampleFeature.get(l));
                 //sampleFeatureList.clear();
                 
@@ -297,6 +298,7 @@ public class MusitePractice {
             
             for(int l = 0; l < sampleFeature.size(); l++)
             {
+                System.out.println("position : "+kPosition.get(l));
                 //sampleFeatureList.add(sampleFeature.get(l));
                 classResult = KNN.KNNTest(tempForBalance, negativeFeatures, sampleFeature.get(l));
                 //sampleFeatureList.clear();

@@ -14,7 +14,7 @@ import java.util.*;
 public class CreateFrag 
 {
 
-    static void outFrag(String inputString, int r, char k, ArrayList<String> positive, ArrayList<String> negative, ArrayList<String> sample, Integer[] siteSet)
+    static ArrayList<Integer> outFrag(String inputString, int r, char k, ArrayList<String> positive, ArrayList<String> negative, ArrayList<String> sample, Integer[] siteSet)
     {
         //find input sequence fragment's length
         int len = inputString.length();
@@ -123,7 +123,7 @@ public class CreateFrag
                 }
             }
         }
-
+        return kPos;
 
     }
  
