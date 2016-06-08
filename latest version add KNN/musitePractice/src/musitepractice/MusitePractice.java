@@ -98,7 +98,7 @@ public class MusitePractice {
           positiveFeatures.put(positive.get(i),combined);
           
           //clear
-          combined = new ArrayList<Double>();
+          combined = new ArrayList<>();
           
         }
         //System.out.println("positive map: "+positiveFeatures);
@@ -159,26 +159,43 @@ public class MusitePractice {
         ArrayList<Double> tempEBAGList = new ArrayList<Double>();
         ArrayList<Double> combined = new ArrayList<Double>();
         
+        HashMap<Integer, ArrayList<Double>> sampleFeature = new HashMap<>();
+        //ArrayList<Double> sampleFeature = new ArrayList<Double>();
+        
         CreateFrag.outFrag(sampleInput, 5, 'A', null, null, sample, null);
         
-        //for(int k = 0;  k < sample.size(); k++)
-        //{
+        for(int k = 0;  k < sample.size(); k++)
+        {
             //call frequency feature
-          tempFreList=Frequency.characterCount(sample.get(1));
-          //System.out.println("positive tempFreList: "+tempFreList);
-          //call binary coding feature(EBAG)
-          tempEBAGList=EBAG.numSeq(sample.get(1));
-          //System.out.println("positive tempEBAGList: "+tempEBAGList);
-          //call PWAA feature
-          tempPWAAList = PWAA.numSeq(sample.get(1));
-          //System.out.println("positive tempPWAAList: "+tempPWAAList);
-          
-        //}
+            tempFreList=Frequency.characterCount(sample.get(k));
+            //System.out.println("positive tempFreList: "+tempFreList);
+            //call binary coding feature(EBAG)
+            tempEBAGList=EBAG.numSeq(sample.get(k));
+            //System.out.println("positive tempEBAGList: "+tempEBAGList);
+            //call PWAA feature
+            tempPWAAList = PWAA.numSeq(sample.get(k));
+            //System.out.println("positive tempPWAAList: "+tempPWAAList);
         
-        //combine all the features
-        combined.addAll(tempFreList);
-        combined.addAll(tempEBAGList);
-        combined.addAll(tempPWAAList);
+            //combine all the features
+            combined.addAll(tempFreList);
+            combined.addAll(tempEBAGList);
+            combined.addAll(tempPWAAList);
+            
+            //System.out.println(combined);
+            
+            sampleFeature.put(k, combined);
+            
+            //System.out.println(sampleFeature.get(k));
+            
+            //System.out.println(sampleFeature.get(0));
+            
+            //clear
+            combined = new ArrayList<Double>();
+            
+            //System.out.println(sampleFeature.get(0));
+            
+        }
+
         
         //used to store classified fragment for current sample
         Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
@@ -194,10 +211,8 @@ public class MusitePractice {
         HashMap<String, ArrayList<Double>> tempForBalance = new HashMap<String, ArrayList<Double>>();
   
         
-        Double[] sampleFeature = new Double[combined.size()];
-        sampleFeature = combined.toArray(sampleFeature);
-
-        ArrayList<Double> sampleFeatureList =  new ArrayList<Double>(Arrays.asList(sampleFeature));
+        //Double[] sampleFeature = new Double[combined.size()];
+        //sampleFeature = combined.toArray(sampleFeature);
         
         
         try (Scanner input = new Scanner(file)) {
@@ -260,7 +275,16 @@ public class MusitePractice {
                 count++;
                 if(count>positiveFeatures.size()) break;
             }
-            classResult = KNN.KNNTest(positiveFeatures, tempForBalance, sampleFeatureList);
+            for(int l = 0; l < sampleFeature.size(); l++)
+            {
+                //System.out.println(sampleFeature.get(l));
+                classResult = KNN.KNNTest(positiveFeatures, tempForBalance, sampleFeature.get(l));
+                //sampleFeatureList.clear();
+                
+                System.out.println(classResult);
+                //System.out.println("sample feature " + l + " is ");
+                //System.out.print(sampleFeature.get(l));
+            }
         }
                
         else{
@@ -270,10 +294,21 @@ public class MusitePractice {
                 count++;
                 if(count>negativeFeatures.size()) break;
             }
-            classResult = KNN.KNNTest(tempForBalance, negativeFeatures, sampleFeatureList);
+            
+            for(int l = 0; l < sampleFeature.size(); l++)
+            {
+                //sampleFeatureList.add(sampleFeature.get(l));
+                classResult = KNN.KNNTest(tempForBalance, negativeFeatures, sampleFeature.get(l));
+                //sampleFeatureList.clear();
+                
+                System.out.println(classResult);
+                //System.out.println("sample feature " + l + " is ");
+                //System.out.print(sampleFeature.get(l));
+            }
+
         }
 
-        System.out.println(classResult);
+        
 //        System.out.println("positive size: "+positive.size());
 //        System.out.println("negative size: "+negative.size());
 
