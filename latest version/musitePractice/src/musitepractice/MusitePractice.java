@@ -132,14 +132,14 @@ public class MusitePractice {
         //System.out.println("negative map: "+negativeFeatures);
     }
     
-    static void getTrainingDataSet(HashMap<String, ArrayList<Double>> positiveFeatures, HashMap<String, ArrayList<Double>> negativeFeatures) throws FileNotFoundException{
+    static int getTrainingDataSet(HashMap<String, ArrayList<Double>> positiveFeatures, HashMap<String, ArrayList<Double>> negativeFeatures, HashMap<String, ArrayList<Double>> tempForBalance) throws FileNotFoundException{
     
         int sampleNo=1;
         String sampleStr="";
         String validStr="";
         int count=1;
         
-        HashMap<String, ArrayList<Double>> tempForBalance = new HashMap<>();
+        
         
         //used to store classified fragment for current sample
         Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
@@ -207,7 +207,9 @@ public class MusitePractice {
                     count++;
                     if(count>positiveFeatures.size()) break;
                 }
-                negativeFeatures = tempForBalance;
+                
+                //negativeFeatures = tempForBalance;
+                return 1;
             }
             else{
                 for (Map.Entry<String, ArrayList<Double>> entry:positiveFeatures.entrySet()) {
@@ -216,7 +218,8 @@ public class MusitePractice {
                     count++;
                     if(count>negativeFeatures.size()) break;
                 }
-                positiveFeatures = tempForBalance;
+                //positiveFeatures = tempForBalance;
+                return 0;
             }
             
 //        System.out.println("!!!!!!!!!!!!!!!!!!!!!positive!!!!!!!!!!!!!!!!!!!!");
@@ -281,7 +284,7 @@ public class MusitePractice {
             classResult = KNN.KNNTest(positiveFeatures, negativeFeatures, sampleFeature.get(l));
             //System.out.println("KNNResult:"+classResult);
             //sampleFeatureList.clear();
-            if(classResult<0.5){
+            if(classResult>0.5){
                 System.out.println("\t"+"  "+(l+1)+"\t"+"\t"+kPosition.get(l)+"\t"+"\t"+testFragsInASeq.get(l)+"\t"+classResult);
             }
             
@@ -300,10 +303,11 @@ public class MusitePractice {
         
         //used to store all fragments of all samples and the features of all the fragments
         
-        final HashMap<String, ArrayList<Double>> positiveFeatures = new HashMap<>();
-        final HashMap<String, ArrayList<Double>> negativeFeatures = new HashMap<>();
+        HashMap<String, ArrayList<Double>> positiveFeatures = new HashMap<>();
+        HashMap<String, ArrayList<Double>> negativeFeatures = new HashMap<>();
+        HashMap<String, ArrayList<Double>> tempForBalance = new HashMap<>();
         
-        getTrainingDataSet(positiveFeatures, negativeFeatures);
+        int lessSet = getTrainingDataSet(positiveFeatures, negativeFeatures, tempForBalance);
   
         int sampleNo_test=1;
         String sampleStr_test="";
@@ -336,8 +340,8 @@ public class MusitePractice {
                         if(validStr_test!=null)//if the input is valid
                         {
                             System.out.println(">Seq "+(sampleNo_test-1));
-                            testASequence(positiveFeatures, negativeFeatures, validStr_test, sampleNo_test-1);
-                            
+                            if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo_test-1);
+                            else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo_test-1);
                         }
                     }
                     sampleStr_test = "";
@@ -355,7 +359,8 @@ public class MusitePractice {
             if(validStr_test!=null)//if the input is valid
             {
                System.out.println(">Seq "+(sampleNo_test-1));
-               testASequence(positiveFeatures, negativeFeatures, validStr_test, sampleNo_test-1);
+               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo_test-1);
+               else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo_test-1);
           
             }
          }
