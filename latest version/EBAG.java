@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 package musitepractice;
-import java.io.File;
 import java.util.*;
-import java.io.*;
-import java.lang.*;
-import java.math.BigDecimal; 
-import java.util.stream.IntStream; 
 /**
  *
  * @author qiaoyang
@@ -24,7 +19,7 @@ public class EBAG {
         
         //variable to save binary code
         
-        ArrayList<Double> numSeqList = new ArrayList<Double>();
+        ArrayList<Double> numSeqList = new ArrayList<>();
 
         
         //Converting given string to char array

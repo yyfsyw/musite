@@ -7,7 +7,6 @@ package musitepractice;
 import java.io.File;
 import java.util.*;
 import java.io.*;
-import java.math.BigDecimal;
 /**
  *
  * @author qiaoyang
@@ -58,7 +57,7 @@ public class MusitePractice {
                 }
 	        else//invalid input, just skip the sample
 	        {
-                    System.out.println(sampleNo+"\t"+"Invalid Input");
+                    //System.out.println(sampleNo+"\t"+"Invalid Input");
                     return null;
                    
 	        }
@@ -71,10 +70,10 @@ public class MusitePractice {
     static void concatenateFragsFeaturesOfSamples(ArrayList<String> positive, ArrayList<String> negative, HashMap positiveFeatures, HashMap negativeFeatures)
     {
 
-        ArrayList<Double> tempPWAAList = new ArrayList<Double>();
-        ArrayList<Double> tempFreList = new ArrayList<Double>();
-        ArrayList<Double> tempEBAGList = new ArrayList<Double>();
-        ArrayList<Double> combined = new ArrayList<Double>();
+        ArrayList<Double> tempPWAAList = new ArrayList<>();
+        ArrayList<Double> tempFreList = new ArrayList<>();
+        ArrayList<Double> tempEBAGList = new ArrayList<>();
+        ArrayList<Double> combined = new ArrayList<>();
         
         //contenate the features of each positive fragment
                             
@@ -99,10 +98,10 @@ public class MusitePractice {
           positiveFeatures.put(positive.get(i),combined);
           
           //clear
-          combined = new ArrayList<Double>();
+          combined = new ArrayList<>();
           
         }
-        System.out.println("positive map: "+positiveFeatures);
+        //System.out.println("positive map: "+positiveFeatures);
         
         
         //contenate the features of each positive fragment
@@ -128,38 +127,29 @@ public class MusitePractice {
             negativeFeatures.put(negative.get(j),combined);
 
             //clear
-            combined = new ArrayList<Double>();
+            combined = new ArrayList<>();
         }
-        System.out.println("negative map: "+negativeFeatures);
+        //System.out.println("negative map: "+negativeFeatures);
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws FileNotFoundException{
-        // TODO code application logic here
+    static void getTrainingDataSet(HashMap<String, ArrayList<Double>> positiveFeatures, HashMap<String, ArrayList<Double>> negativeFeatures) throws FileNotFoundException{
+    
         int sampleNo=1;
         String sampleStr="";
         String validStr="";
-        //print the title
-        Frequency.printTitleLetter();
+        int count=1;
+        
+        HashMap<String, ArrayList<Double>> tempForBalance = new HashMap<>();
+        
+        //used to store classified fragment for current sample
+        Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
+        ArrayList<String> positive = new ArrayList<>();
+        ArrayList<String> negative = new ArrayList<>();
         
         //FILE operation
         File file = new File("artifica_data.txt");
         
-        //used to store classified fragment for current sample
-        Integer[] siteSet = {5, 6, 10, 11, 15, 16, 17};
-
-        ArrayList<String> positive = new ArrayList<String>();
-
-        ArrayList<String> negative = new ArrayList<String>();
-        
-        //used to store all fragments of all samples and the features of all the fragments
-        
-        HashMap<String, ArrayList<Double>> positiveFeatures = new HashMap<String, ArrayList<Double>>();
-        HashMap<String, ArrayList<Double>> negativeFeatures = new HashMap<String, ArrayList<Double>>();
-  
-        try (Scanner input = new Scanner(file)) {
+         try (Scanner input = new Scanner(file)) {
             
             while(input.hasNext())
             {
@@ -177,12 +167,13 @@ public class MusitePractice {
                         if(validStr!=null)//if the input is valid
                         {
                             //get the positive and negative fragments list of the current sample
-                            System.out.println(validStr);
-                            CreateFrag.outFrag(validStr, 5, 'A',positive,negative,siteSet);
-                            System.out.println("positive: "+positive);
-                            System.out.println("negative: "+negative);
+                            //System.out.println(validStr);
+                            CreateFrag.outFrag(validStr, 5, 'A', positive, negative, null, siteSet);
+                            //System.out.println("positive: "+positive);
+                            //System.out.println("negative: "+negative);
                             
                             concatenateFragsFeaturesOfSamples(positive, negative, positiveFeatures, negativeFeatures);
+                            
                         }
                     }
                     sampleStr = "";
@@ -195,19 +186,179 @@ public class MusitePractice {
             //calculate the last sample
             //call check function
             validStr = checkSample(sampleStr,sampleNo-1);
-            System.out.println(validStr);
+            //System.out.println(validStr);
 
             if(validStr!=null)//if the input is valid
             {
                 //get the positive and negative fragments list of the current sample
-                System.out.println(validStr);
-                CreateFrag.outFrag(validStr, 5, 'A',positive,negative,siteSet);
-                System.out.println("positive: "+positive);
-                System.out.println("negative: "+negative);
+                //System.out.println(validStr);
+                CreateFrag.outFrag(validStr, 5, 'A', positive, negative, null, siteSet);
+                //System.out.println("positive: "+positive);
+                //System.out.println("negative: "+negative);
 
                 concatenateFragsFeaturesOfSamples(positive, negative, positiveFeatures, negativeFeatures);
+          
             }
+            
+            if(positiveFeatures.size()<=negativeFeatures.size()){
+                for (Map.Entry<String, ArrayList<Double>> entry:negativeFeatures.entrySet()) {
+
+                    tempForBalance.put(entry.getKey(), entry.getValue());
+                    count++;
+                    if(count>positiveFeatures.size()) break;
+                }
+                negativeFeatures = tempForBalance;
+            }
+            else{
+                for (Map.Entry<String, ArrayList<Double>> entry:positiveFeatures.entrySet()) {
+                
+                    tempForBalance.put(entry.getKey(), entry.getValue());
+                    count++;
+                    if(count>negativeFeatures.size()) break;
+                }
+                positiveFeatures = tempForBalance;
+            }
+            
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!positive!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println(positiveFeatures);
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!negative!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println(negativeFeatures);
+//            
+        } 
+    
+    }
+    
+    static void testASequence(HashMap<String, ArrayList<Double>> positiveFeatures, HashMap<String, ArrayList<Double>> negativeFeatures, String testSeq, int sampleNo){
+    
+        ArrayList<String> testFragsInASeq = new ArrayList<>();
+        ArrayList<Double> tempPWAAList = new ArrayList<>();
+        ArrayList<Double> tempFreList = new ArrayList<>();
+        ArrayList<Double> tempEBAGList = new ArrayList<>();
+        ArrayList<Double> combined = new ArrayList<>();
+        double classResult=0.0;
+        
+        testSeq = checkSample(testSeq,sampleNo-1);
+        //sampleFeature contain feature vectors in one sequence
+        HashMap<Integer, ArrayList<Double>> sampleFeature = new HashMap<>();
+        //ArrayList<Double> sampleFeature = new ArrayList<Double>();
+        ArrayList<Integer> kPosition = CreateFrag.outFrag(testSeq, 5, 'A', null, null, testFragsInASeq, null);
+        
+        for(int k = 0;  k < testFragsInASeq.size(); k++)
+        {
+            //call frequency feature
+            tempFreList=Frequency.characterCount(testFragsInASeq.get(k));
+            //System.out.println("positive tempFreList: "+tempFreList);
+            //call binary coding feature(EBAG)
+            tempEBAGList=EBAG.numSeq(testFragsInASeq.get(k));
+            //System.out.println("positive tempEBAGList: "+tempEBAGList);
+            //call PWAA feature
+            tempPWAAList = PWAA.numSeq(testFragsInASeq.get(k));
+            //System.out.println("positive tempPWAAList: "+tempPWAAList);
+        
+            //combine all the features
+            combined.addAll(tempFreList);
+            combined.addAll(tempEBAGList);
+            combined.addAll(tempPWAAList);
+            
+            //System.out.println(combined);
+            
+            sampleFeature.put(k, combined);
+            
+            //System.out.println(sampleFeature.get(k));
+            
+            //System.out.println(sampleFeature.get(0));
+            
+            //clear
+            combined = new ArrayList<>();
+            
+            //System.out.println(sampleFeature.get(0));
+            
         }
+        
+        for(int l = 0; l < sampleFeature.size(); l++)
+        {
+            //System.out.println(sampleFeature.get(l));
+            classResult = KNN.KNNTest(positiveFeatures, negativeFeatures, sampleFeature.get(l));
+            //System.out.println("KNNResult:"+classResult);
+            //sampleFeatureList.clear();
+            if(classResult<0.5){
+                System.out.println("\t"+"  "+(l+1)+"\t"+"\t"+kPosition.get(l)+"\t"+"\t"+testFragsInASeq.get(l)+"\t"+classResult);
+            }
+            
+        }
+    }
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws FileNotFoundException{
+        // TODO code application logic here
+        
+        //print the title
+        //Frequency.printTitleLetter();
+        
+        //used to store all fragments of all samples and the features of all the fragments
+        
+        final HashMap<String, ArrayList<Double>> positiveFeatures = new HashMap<>();
+        final HashMap<String, ArrayList<Double>> negativeFeatures = new HashMap<>();
+        
+        getTrainingDataSet(positiveFeatures, negativeFeatures);
+  
+        int sampleNo_test=1;
+        String sampleStr_test="";
+        String validStr_test="";
+        
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!positive!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println(positiveFeatures);
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!negative!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println(negativeFeatures);
+        //print title
+        System.out.println("seqNo"+"\t"+"Ordinal#"+"\t"+"Position"+"\t"+"Peptides"+"\t"+"Scores");
+
+        File file = new File("artifica_data.txt");
+        
+         try (Scanner input = new Scanner(file)) {
+            
+            while(input.hasNext())
+            {
+                //it will skip white space(" ","\t")
+                String nextToken = input.next();
+                //or to process line by line
+                //String nextLine = input.nextLine();
+                
+                if(nextToken.contains(">sample"))
+                {
+                    //print the result for last sample
+                    if(sampleNo_test!=1){
+                        //call check function for current sample
+                        validStr_test = checkSample(sampleStr_test,sampleNo_test-1);
+                        if(validStr_test!=null)//if the input is valid
+                        {
+                            System.out.println(">Seq "+(sampleNo_test-1));
+                            testASequence(positiveFeatures, negativeFeatures, validStr_test, sampleNo_test-1);
+                            
+                        }
+                    }
+                    sampleStr_test = "";
+                    sampleNo_test++;
+                    continue;
+                }
+                sampleStr_test = sampleStr_test + nextToken;
+                
+            }
+            //calculate the last sample
+            //call check function
+            validStr_test = checkSample(sampleStr_test,sampleNo_test-1);
+            //System.out.println(validStr);
+
+            if(validStr_test!=null)//if the input is valid
+            {
+               System.out.println(">Seq "+(sampleNo_test-1));
+               testASequence(positiveFeatures, negativeFeatures, validStr_test, sampleNo_test-1);
+          
+            }
+         }
 
     }
     

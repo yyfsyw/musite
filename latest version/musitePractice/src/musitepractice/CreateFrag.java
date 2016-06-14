@@ -9,28 +9,23 @@ package musitepractice;
  *
  * @author qiaoyang
  */
-import java.io.File;
 import java.util.*;
-import java.io.*;
-import java.lang.*;
-import java.math.BigDecimal; 
-import java.util.stream.IntStream; 
 
 public class CreateFrag 
 {
 
-    static void outFrag(String inputString, int r, char k, ArrayList<String> positive, ArrayList<String> negative, Integer[] siteSet)
+    static ArrayList<Integer> outFrag(String inputString, int r, char k, ArrayList<String> positive, ArrayList<String> negative, ArrayList<String> sample, Integer[] siteSet)
     {
         //find input sequence fragment's length
         int len = inputString.length();
 
-        System.out.println("length is " + len);
+        //System.out.println("length is " + len);
         //System.out.println("r is " + r);
 
         //store the K position
-        ArrayList<Integer> kPos = new ArrayList<Integer>();
+        ArrayList<Integer> kPos = new ArrayList<>();
         //store a range of string for K
-        ArrayList<String> kString = new ArrayList<String>();  
+        ArrayList<String> kString = new ArrayList<>();  
         
         //the char added when it's out of range
         char frontChar =  inputString.charAt(0);
@@ -101,25 +96,34 @@ public class CreateFrag
             }
 
         }
-
-
-        List<Integer> list = Arrays.asList(siteSet);
-
-        //output
-        for(int i = 0; i < kPos.size(); i++)
+        
+        if(positive == null && negative == null && siteSet == null)
         {
-            //System.out.println("The "+k+" is at " + kPos.get(i) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(i));
-            
-            if(list.contains(kPos.get(i)))
+           for(int i = 0; i < kPos.size(); i++)
             {
-                positive.add(kString.get(i));
-            }
-            else
-            {
-                negative.add(kString.get(i));
+                sample.add(kString.get(i));
             }
         }
+        else
+        {
+            List<Integer> list = Arrays.asList(siteSet);
 
+            //output
+            for(int i = 0; i < kPos.size(); i++)
+            {
+                //System.out.println("The "+k+" is at " + kPos.get(i) + "th position of the input sequence,\nthe corresponding fragment is " + kString.get(i));
+
+                if(list.contains(kPos.get(i)))
+                {
+                    positive.add(kString.get(i));
+                }
+                else
+                {
+                    negative.add(kString.get(i));
+                }
+            }
+        }
+        return kPos;
 
     }
  

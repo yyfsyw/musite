@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 package musitepractice;
-import java.io.File;
 import java.util.*;
-import java.io.*;
 import java.lang.*;
-import java.math.BigDecimal; 
 import java.util.stream.IntStream; 
 /**
  *
@@ -36,7 +33,7 @@ public class PWAA {
         //System.out.println(loca[0]);
 
         //find number sequence
-        ArrayList<Double> numSeq = new ArrayList<Double>();
+        ArrayList<Double> numSeq = new ArrayList<>();
         int temsum;
         int temsign;
 
