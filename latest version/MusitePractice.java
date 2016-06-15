@@ -298,6 +298,8 @@ public class MusitePractice {
     public static void main(String[] args) throws FileNotFoundException{
         // TODO code application logic here
         
+        
+
         //print the title
         //Frequency.printTitleLetter();
         
@@ -306,6 +308,8 @@ public class MusitePractice {
         HashMap<String, ArrayList<Double>> positiveFeatures = new HashMap<>();
         HashMap<String, ArrayList<Double>> negativeFeatures = new HashMap<>();
         HashMap<String, ArrayList<Double>> tempForBalance = new HashMap<>();
+        ArrayList<String> testSeqs = new ArrayList<>();
+        
         
         int lessSet = getTrainingDataSet(positiveFeatures, negativeFeatures, tempForBalance);
   
@@ -320,50 +324,76 @@ public class MusitePractice {
         //print title
         System.out.println("seqNo"+"\t"+"Ordinal#"+"\t"+"Position"+"\t"+"Peptides"+"\t"+"Scores");
 
-        File file = new File("artifica_data.txt");
-        
-         try (Scanner input = new Scanner(file)) {
+        if(args[1]!=null){
             
-            while(input.hasNext())
-            {
-                //it will skip white space(" ","\t")
-                String nextToken = input.next();
-                //or to process line by line
-                //String nextLine = input.nextLine();
-                
-                if(nextToken.contains(">sample"))
-                {
-                    //print the result for last sample
-                    if(sampleNo_test!=1){
-                        //call check function for current sample
-                        validStr_test = checkSample(sampleStr_test,sampleNo_test-1);
-                        if(validStr_test!=null)//if the input is valid
-                        {
-                            System.out.println(">Seq "+(sampleNo_test-1));
-                            if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo_test-1);
-                            else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo_test-1);
-                        }
-                    }
-                    sampleStr_test = "";
-                    sampleNo_test++;
-                    continue;
-                }
-                sampleStr_test = sampleStr_test + nextToken;
-                
-            }
-            //calculate the last sample
-            //call check function
-            validStr_test = checkSample(sampleStr_test,sampleNo_test-1);
-            //System.out.println(validStr);
+            //File file = new File("artifica_data.txt");
+            File file = new File(args[1]);
 
-            if(validStr_test!=null)//if the input is valid
-            {
-               System.out.println(">Seq "+(sampleNo_test-1));
-               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo_test-1);
-               else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo_test-1);
-          
-            }
-         }
+             try (Scanner input = new Scanner(file)) {
+
+                while(input.hasNext())
+                {
+                    //it will skip white space(" ","\t")
+                    String nextToken = input.next();
+                    //or to process line by line
+                    //String nextLine = input.nextLine();
+
+                    if(nextToken.contains(">"))
+                    {
+                        //print the result for last sample
+                        if(sampleNo_test!=1){
+                            //call check function for current sample
+    //                        validStr_test = checkSample(sampleStr_test,sampleNo_test-1);
+    //                        if(validStr_test!=null)//if the input is valid
+    //                        {
+    //                            System.out.println(">Seq "+(sampleNo_test-1));
+    //                            if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo_test-1);
+    //                            else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo_test-1);
+    //                        }
+                            testSeqs.add(sampleStr_test);
+                        }
+                        sampleStr_test = "";
+                        sampleNo_test++;
+                        continue;
+                    }
+                    sampleStr_test = sampleStr_test + nextToken;
+
+                }
+                //calculate the last sample
+                //call check function
+    //            validStr_test = checkSample(sampleStr_test,sampleNo_test-1);
+    //            //System.out.println(validStr);
+    //
+    //            if(validStr_test!=null)//if the input is valid
+    //            {
+    //               System.out.println(">Seq "+(sampleNo_test-1));
+    //               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo_test-1);
+    //               else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo_test-1);
+    //          
+    //            }
+                testSeqs.add(sampleStr_test);      
+             }
+        }
+         
+        if(args[2]!=null){ 
+//            for(int k=0; k<testSeqs.size();k++){
+//                   validStr_test = checkSample(testSeqs.get(k),k+1);
+//                   if(validStr_test!=null)//if the input is valid
+//                           {
+//                               System.out.println(">Seq "+(k+1));
+//                               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, k+1);
+//                               else testASequence(tempForBalance, negativeFeatures, validStr_test, k+1);
+//                           }
+//               }
+            int sampleNo = Integer.parseInt(args[3]);
+            validStr_test = checkSample(args[2],sampleNo);
+                   if(validStr_test!=null)//if the input is valid
+                           {
+                               System.out.println(">Seq "+sampleNo);
+                               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, sampleNo);
+                               else testASequence(tempForBalance, negativeFeatures, validStr_test, sampleNo);
+                           }
+        }
 
     }
     
