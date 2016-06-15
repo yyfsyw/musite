@@ -324,10 +324,10 @@ public class MusitePractice {
         //print title
         System.out.println("seqNo"+"\t"+"Ordinal#"+"\t"+"Position"+"\t"+"Peptides"+"\t"+"Scores");
 
-        if(args[1]!=null){
+        if(args[0]!=null){
             
             //File file = new File("artifica_data.txt");
-            File file = new File(args[1]);
+            File file = new File(args[0]);
 
              try (Scanner input = new Scanner(file)) {
 
@@ -374,19 +374,20 @@ public class MusitePractice {
                 testSeqs.add(sampleStr_test);      
              }
         }
+        for(int k=0; k<testSeqs.size();k++){
+                   validStr_test = checkSample(testSeqs.get(k),k+1);
+                   if(validStr_test!=null)//if the input is valid
+                           {
+                               System.out.println(">Seq "+(k+1));
+                               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, k+1);
+                               else testASequence(tempForBalance, negativeFeatures, validStr_test, k+1);
+                           }
+               }
          
-        if(args[2]!=null){ 
-//            for(int k=0; k<testSeqs.size();k++){
-//                   validStr_test = checkSample(testSeqs.get(k),k+1);
-//                   if(validStr_test!=null)//if the input is valid
-//                           {
-//                               System.out.println(">Seq "+(k+1));
-//                               if(lessSet == 1)    testASequence(positiveFeatures, tempForBalance, validStr_test, k+1);
-//                               else testASequence(tempForBalance, negativeFeatures, validStr_test, k+1);
-//                           }
-//               }
-            int sampleNo = Integer.parseInt(args[3]);
-            validStr_test = checkSample(args[2],sampleNo);
+        if(!"NULL".equals(args[1])){ 
+//            
+            int sampleNo = Integer.parseInt(args[2]);
+            validStr_test = checkSample(args[1],sampleNo);
                    if(validStr_test!=null)//if the input is valid
                            {
                                System.out.println(">Seq "+sampleNo);
