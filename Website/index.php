@@ -19,7 +19,10 @@ if(isset($_POST['submitInput']))
 {
 	$input = $_POST['inputSq'];
 	//echo "$input";
-	$output = shell_exec("java -jar musitePractice.jar artifica_data.txt $input 1");
+	$myfile = fopen("input.txt", "w") or die("Unable to open file!");
+	fwrite($myfile, $input);
+	fclose($myfile);
+	$output = shell_exec("java -jar musitePractice.jar");
 	echo "$output";
 }
 
