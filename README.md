@@ -4,5 +4,5 @@
 
 http://musite.sourceforge.net/
 
-http://kobe.centralus.cloudapp.azure.com/muSite/index.php
+http://dev.musite.net/muSite/index.php
 
