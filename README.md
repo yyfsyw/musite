@@ -4,5 +4,5 @@
 
 http://musite.sourceforge.net/
 
-http://dev.musite.net/muSite/index.php
+http://dev.musite.net/newMuSite/index.php
 
