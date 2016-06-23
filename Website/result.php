@@ -1,3 +1,31 @@
+<?php
+	if(isset($_POST['submitInput']))
+	{
+		$input = $_POST['inputSeq'];
+		$selection = $_POST['selection'];
+		//echo "$input";
+		$myfile = fopen("input.txt", "w") or die("Unable to open file!");
+		fwrite($myfile, $input);
+		fclose($myfile);
+		$output = shell_exec("java -jar musitePractice.jar $selection");
+		//echo "$output";
+		$to = $_POST['emailAddress'];
+		//echo "$to";
+		$subject = "Musite Result";
+		//$txt = "Hello world!";
+		$headers = "From: ylskt3@mail.missouri.edu";
+
+		if(!empty($to))
+		{
+			if(!mail($to, $subject, $output, $headers))
+			echo "error";
+		}
+	}
+?>
+
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
@@ -129,60 +157,15 @@
 						<div id="mainWrapper">
 							<div class="clear">
 
-									<form target="_blank" id="bioform" action="result.php" method="post" enctype="multipart/form-data">
-
-									<div id="bioform-message"></div>
-
 									<fieldset>
-
-									<legend id="mainLegend">SUBMISSION:</legend>
-
-									<fieldset id="accessions">
-									<legend>Accessions:</legend>
-										<div class="inset">Input comma-separated accessions (limit of 100). <a id="uniprot_example" class="theme" href="files/uniprot_example.txt" target="_blank">example</a><br/>
-										<select name="accession_type" id="accession_type" size="1">
-										<option value="uniprot">UniProt</option>
-										</select><strong>:</strong>
-
-										<input type="text" name="accession_text" id="accession_text" size="40" />
-										</div>
-									</fieldset>
-
+									<legend id="mainLegend">RESULT:</legend>
 									<fieldset>
-									<legend>Sequence:</legend>
-									<div class="inset">Input protein sequence(s) in FASTA format (limit of 100). <a id="fasta_example" class="theme" href="files/fasta_example.txt" target="_blank">example</a><br/>
-									<textarea name="inputSeq" id="sequence" class="resizable" rows="12" cols="100"></textarea></div><br>
-
-									<legend>Upload Sequence file:</legend>
-									<div class="inset">Input protein sequence(s) file in FASTA format (limit of 100). <a id="fasta_example" class="theme" href="files/fasta_example.txt" target="_blank">example</a><br/>
-									<label for="c">Upload File: </label>
-									<input id="c" name="uploadedFile" type="file" aria-required="true"></div><br>
-
-									<div class="inset">If you want to send the result to your email, enter your email, otherwise leave it empty
-									<br>Your email: <input type="email" name="emailAddress" id="accession_text" size="39" /><br>
-									<br></div>
-
-									<legend>Selections:</legend><br>
-									<div class="inset">
-									<label for="Ser">Ser</label>
-									<input type="radio" name="selection" id="ser" value="S">
-									<label for="Thr">Thr</label>
-									<input type="radio" name="selection" id="thr" value="T">
-									<label for="Tyr">Tyr</label>
-									<input type="radio" name="selection" id="tyr" value="K">
-									</div>
+									<textarea name="Result" id="sequence" class="resizable" rows="25" cols="100"><?php echo "$output"; ?></textarea>
 									</fieldset>
 
-									<fieldset id="organisms">
-
-									</fieldset>
-
-									<fieldset>
-										<div><button type="submit" name = "submitInput" class="btn btn-primary" id="submitBtn" >Submit</button>
-										<br>
-										<br>
-									</fieldset>
-									</form>
+									<p>&nbsp; &nbsp;</p>
+									<button name="sendResult" type="submit" value="Send" class="btn btn-primary" id="submitBtn">Send Result</button>
+									<button type="reset" value="Reset" class="btn btn-primary" id="submitBtn">Reset</button>
 
 									<p>&nbsp; &nbsp;</p>
 									<p>
