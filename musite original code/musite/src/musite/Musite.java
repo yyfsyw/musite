@@ -27,7 +27,7 @@ import musite.ui.MusiteDesktop;
  * @author Jianjiong Gao
  */
 public final class Musite {
-    private static MusiteDesktop desktop = null;
+    private static MusiteDesktop desktop = null;//desktop,private static often use for constants,makes code more readable.
 
     public static MusiteDesktop getDesktop() {
         if (desktop==null) {
