@@ -36,7 +36,11 @@ public final class MusiteInit {
         initializeFolders();
         initializeModels();
     }
-
+/*
+using final string to divide cateogoried and get direction from the begining
+it is much easier to read from local file directly
+the remaining code are basicaly init& error cheng and  then  throw message/set up
+*/
     public static final String BASE_DIR = ".";
     public static final String TMP_DIR = BASE_DIR+File.separator+"tmp";
     public static final String RESOURCE_DIR = BASE_DIR+File.separator+"resource";
