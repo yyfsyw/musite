@@ -18,7 +18,7 @@
 
 package musite;
 
-import com.jgoodies.looks.Options;
+import com.jgoodies.looks.Options;//
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 
 import java.awt.Dimension;
@@ -48,7 +48,7 @@ public class MusiteMain {
 
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    Musite.getDesktop().setVisible(true);
+                    Musite.getDesktop().setVisible(true);//show on the screen
                 }
             });
         } else {
