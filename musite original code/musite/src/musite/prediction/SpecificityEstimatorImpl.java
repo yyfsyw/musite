@@ -21,7 +21,7 @@ package musite.prediction;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collections;//"wrappers" and contains polymorphic algorithms
 import java.util.List;
 
 /**
@@ -29,7 +29,7 @@ import java.util.List;
  * @author Jianjiong Gao
  */
 public class SpecificityEstimatorImpl implements SpecificityEstimator, Serializable {
-    private static final long serialVersionUID = 2276227520532317467L;
+    private static final long serialVersionUID = 2276227520532317467L;//maybe for large range or error checking?
 
     private List<Double> trainingPredictions;
 
@@ -38,22 +38,39 @@ public class SpecificityEstimatorImpl implements SpecificityEstimator, Serializa
                 && predictionsForTrainingNegativeData.isEmpty())
             throw new IllegalArgumentException();
         trainingPredictions = new ArrayList(predictionsForTrainingNegativeData);
-        Collections.sort(trainingPredictions);
+        Collections.sort(trainingPredictions);//sort into ascending order
     }
 
     public double specificity(double threshold) {
         int n = trainingPredictions.size();
+        /*ix will get the index of the search key and it takes O(logn)
+        if it is contained in the list; otherwise, (-(insertion point) - 1). 
+        The insertion point is defined as the point at which the key would be inserted into the list: 
+            ***the index of the first element greater than the key, 
+            ***Or list.size() if all elements in the list are less than the specified key. 
+        Note that this guarantees that the return value will be >= 0 if and only if the key is found.
+        */
         int ix = Collections.binarySearch(trainingPredictions, threshold);
-        if (ix>=0) { // exact match
+        if (ix>=0)
+        { // exact match
+        /*when it is exactly matched, find the "string" closer to the end of the total size*/
             while (ix<n-2 && trainingPredictions.get(ix)==trainingPredictions.get(ix+1))
                 ix++;
-            return 1.0*(ix+1)/n;
-        } else {
-            if (ix==-1) { // smaller than the min
+            return 1.0*(ix+1)/n;//it's a way for accuracy estimation
+        } 
+        else 
+        {
+            if (ix==-1) 
+            { // smaller than the min
                 return 0.0;
-            } else if (ix==-n-1) { // larger than the max
+            } 
+        else if (ix==-n-1) 
+            { // larger than the max
                 return 1.0;
-            } else {
+            } 
+        else 
+            {
+            /*UNFINISH~~~*/
                 double x1 = trainingPredictions.get(-ix-2);
                 double x2 = trainingPredictions.get(-ix-1);
                 return (-ix-((x2-threshold)/(x2-x1)))/n;
