@@ -82,17 +82,17 @@ public class SpecificityEstimatorImpl implements SpecificityEstimator, Serializa
         if (specificity<0 || specificity>1)
             throw new java.lang.IllegalArgumentException("specificity should be between 0 and 1.");
         int n = trainingPredictions.size();
-        if (specificity<1.0/n)
-            return trainingPredictions.get(0)-Double.MIN_VALUE;
+        if (specificity<1.0/n)//becasuse n(the size of string) should be greater than 1 => 1.0/n should less than 1.0
+            return trainingPredictions.get(0)-Double.MIN_VALUE;// MIN_VALUE, which is 2^(-31)
         double d = n*specificity;
-        double l = Math.floor(d);
+        double l = Math.floor(d);//\lfloor d \rfloor 
         double y1 = trainingPredictions.get((int)l-1);
         if (l==d) // sp=1.0 will be handled
             return y1;
 
         double y2 = trainingPredictions.get((int)l);
 
-        return y1+(d-l)*(y2-y1);
+        return y1+(d-l)*(y2-y1);// similar to (x1,y1) & (x2,y2), then get ~~~
     }
 
     public List<Double> trainingPredictions() {
