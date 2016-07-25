@@ -1,12 +1,7 @@
 package com.company;
+import java.lang.Math;
 
-public class Main {
-
-    public static void main(String[] args) {
-        // write your code here
-        //Seri,k,w三个变量为已知,已给定参数
-        function f=RSTPAA_1(Seri,k,w)
-                % t1=now;
+public class RSTPAA_1 {
         double[][] dataHHP={
                 {0.6200, -0.5000, 15.0000, 2.3500, 9.8700, 6.1100},
                 {0.2900, -1.0000, 47.0000, 1.7100, 10.7800, 5.0200},
@@ -53,16 +48,52 @@ public class Main {
                 for (int j=1; j>Len-i; j++)
                 {
                     //前面得先定义下num& numk 是 string类型的array or string?(mutable, 不行)
-                    //num=find(OSet==Seri(j));  
+                    //num=find(OSet==Seri(j));
                     // find(X),X 为矩阵,按竖行计算出每个不为0的元素的Index,在这里是找出和Seri(j)不同的index位置,应该类似于IndexOf在java里面
                     //所以 num和 numk必须是mutable的元素集合,在java里可以使用 array或者指针
                     //numk=find(OSet==Seri(j+i));
-                }
+                    if sum(num)~=0&sum(numk)~=0
+                    {
+                        H1=[dataHHP(num,1),dataHHP(num,2),dataHHP(num,3)];
+                        H1k=[dataHHP(numk,1),dataHHP(numk,2),dataHHP(numk,3)];
+                        H1=H1./stdm;
+                        H1k=H1k./stdm;
+                        tranJ=sum((H1k-H1).^2)/3;
+                    }
+                    else
+                    tranJ=0; //未完成 tranJ 的definition
 
-            }
-        }
+                    tao(i)=tao(i)+tranJ;
 
-    }
+
+                }//j loop
+
+                tao(i)=tao(i)/(Len-i);
+
+            }// i loop
+
+            /*
+
+            tempaa=zeros(1,20+k);
+            sumtao=sum(tao)*w;
+            for i=1:20+k
+            if i<21
+                tempaa(i)=P(i)/(1+sumtao);
+            else
+                tempaa(i)=w*tao(i-20)/(1+sumtao);
+            end
+            end
+            f=tempaa;
+
+            * */
+
+        }//else loop
+    public static void main(String[] args) {
+        //Seri,k,w三个变量为已知,已给定参数
+        double[][] f=RSTPAA_1(Seri,k,w)//function f=RSTPAA_1(Seri,k,w)??????????
+    }//static void main end
+
+
 }
 
 
